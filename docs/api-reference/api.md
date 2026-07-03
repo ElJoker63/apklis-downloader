@@ -20,10 +20,23 @@ Obtiene el listado completo de categorías disponibles para aplicaciones y juego
 ## `get_apps`
 
 ```python
-async def get_apps(limit=30, offset=0, ordering=None, category=None, free=None, paid=None) -> list
+async def get_apps() -> dict
 ```
 
-**Función de consulta flexible.** Obtiene un listado de aplicaciones aplicando paginación, ordenamiento y filtros por precio o categorías.
+**Función de compatibilidad original.** Obtiene la estructura JSON completa de las categorías de aplicaciones agrupadas por Apklis.
+
+**Retorna:**
+- `dict`: JSON con la paginación y la lista de categorías (ej. `{"count": 10, "results": [...]}`).
+
+---
+
+## `get_applications`
+
+```python
+async def get_applications(limit=30, offset=0, ordering=None, category=None, free=None, paid=None) -> list
+```
+
+**Función de consulta flexible de aplicaciones.** Obtiene un listado de aplicaciones aplicando paginación, ordenamiento y filtros por precio o categorías.
 
 **Parámetros:**
 - `limit` *(int, opcional)*: Cantidad máxima de aplicaciones a retornar (por defecto `30`).

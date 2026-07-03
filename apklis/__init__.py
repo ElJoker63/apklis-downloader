@@ -12,6 +12,7 @@ from .api import (
     get_categories,
     get_app_details,
     get_releases,
+    get_applications,
 )
 from .downloader import download_apk, default_progress_callback
 from .utils import format_size, format_speed, sizeof_fmt
@@ -37,4 +38,5 @@ __all__ = [
     "get_categories",
     "get_app_details",
     "get_releases",
+    "get_applications",
 ]

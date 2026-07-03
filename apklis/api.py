@@ -1,5 +1,13 @@
 import httpx
 
+async def get_apps():
+    """Gets the categories list of applications from Apklis asynchronously."""
+    api = 'https://api.apklis.cu/v2/category/?group=Applications'
+    async with httpx.AsyncClient() as client:
+        response = await client.get(api)
+        response.raise_for_status()
+        return response.json()
+
 async def get_categories():
     """Gets the list of all application and game categories from Apklis."""
     api = 'https://api.apklis.cu/v2/category/'
@@ -9,7 +17,7 @@ async def get_categories():
         data = response.json()
         return data['results']
 
-async def get_apps(limit=30, offset=0, ordering=None, category=None, free=None, paid=None):
+async def get_applications(limit=30, offset=0, ordering=None, category=None, free=None, paid=None):
     """
     Flexible method to retrieve applications with sorting, categories and price filtering.
     
@@ -127,8 +135,8 @@ async def get_apk_url(package_name):
 # Backward compatibility functions
 async def pays_app(offset="0"):
     """Backward-compatible pays_app helper."""
-    return await get_apps(limit=30, offset=offset, paid=True)
+    return await get_applications(limit=30, offset=offset, paid=True)
 
 async def get_apps_by_category(category, offset="0"):
     """Backward-compatible get_apps_by_category helper."""
-    return await get_apps(limit=30, offset=offset, category=category)
+    return await get_applications(limit=30, offset=offset, category=category)
