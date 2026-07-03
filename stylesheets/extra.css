@@ -1,0 +1,35 @@
+/* Colores corporativos de Apklis.cu */
+
+:root {
+  /* Color del Header / Barra de Navegación (Gris oscuro del logo) */
+  --md-primary-fg-color: #1e2229 !important;
+  --md-primary-fg-color--dark: #14171c !important;
+
+  /* Color de Acento (Naranja vibrante de la mariposa) */
+  --md-accent-fg-color: #ff6d00 !important;
+  --md-accent-fg-color--transparent: rgba(255, 109, 0, 0.1) !important;
+}
+
+/* Cambiar color de selección de pestañas activas */
+.md-tabs__link--active {
+  color: #ff9100 !important;
+}
+
+/* Personalizar links en el contenido */
+.md-content a {
+  color: #ff6d00;
+}
+
+.md-content a:hover {
+  color: #e65100;
+}
+
+/* Botón de volver arriba */
+.md-top {
+  background-color: #ff6d00 !important;
+}
+
+/* Bordes y detalles del menú lateral */
+.md-nav__link--active {
+  color: #ff6d00 !important;
+}
