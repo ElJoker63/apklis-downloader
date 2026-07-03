@@ -10,13 +10,13 @@ if hasattr(sys.stdout, 'reconfigure'):
         pass
 
 async def main():
-    apps = ['com.abermudez.virtualshop', 'cu.todus.android']
+    apps = await apklis.pays_app("0")
     
     for app in apps:
         try:
             # 1. Obtener información de la app
-            icon, name, description, updated = await apklis.get_info(app)
-            release = await apklis.get_release(app)
+            icon, name, description, updated = await apklis.get_info(app["package_name"])
+            release = await apklis.get_release(app["package_name"])
             public_status = '✅' if release.get('public') else '❌'
             
             text = (
@@ -29,14 +29,14 @@ async def main():
             print(text)
             
             # 2. Obtener URL de descarga resuelta automáticamente
-            urldl = await apklis.get_apk_url(app)
+            urldl = await apklis.get_apk_url(app["package_name"])
             
             # 3. Descargar APK con progreso
             await apklis.download_apk(urldl)
             print("-" * 50)
             
         except Exception as e:
-            print(f"Error procesando {app}: {e}")
+            print(f"Error procesando {app['name']}: {e}")
             print("-" * 50)
 
 
@@ -46,5 +46,5 @@ async def search():
         print(app)
 
 if __name__ == "__main__":
-    #asyncio.run(main())
-    asyncio.run(search())
+    asyncio.run(main())
+    #asyncio.run(search())

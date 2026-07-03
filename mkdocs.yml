@@ -6,20 +6,22 @@ repo_url: https://github.com/ElJoker63/apklis-downloader
 
 theme:
   name: material
+  logo: assets/logo.png
+  favicon: assets/favicon.png
   palette:
     # Modo Claro
     - media: "(prefers-color-scheme: light)"
       scheme: default
-      primary: teal
-      accent: teal
+      primary: deep-orange
+      accent: orange
       toggle:
         icon: material/weather-night
         name: Cambiar al modo oscuro
     # Modo Oscuro
     - media: "(prefers-color-scheme: dark)"
       scheme: slate
-      primary: teal
-      accent: teal
+      primary: deep-orange
+      accent: orange
       toggle:
         icon: material/weather-sunny
         name: Cambiar al modo claro
@@ -27,9 +29,20 @@ theme:
     - navigation.tabs
     - navigation.sections
     - navigation.top
+    - navigation.footer
     - search.suggest
     - search.highlight
     - content.code.copy
+
+extra_css:
+  - stylesheets/extra.css
+
+copyright: 'Copyright &copy; 2026 ElJoker63 - Desarrollado con ❤️ para Apklis.cu'
+
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/ElJoker63/apklis-downloader
 
 markdown_extensions:
   - admonition
