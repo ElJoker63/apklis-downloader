@@ -8,7 +8,7 @@ dynamic = ["version"]
 description = "A Python library to retrieve metadata and download APKs from Apklis, with progress monitoring support."
 readme = "README.md"
 authors = [
-    { name = "El Joker", email = "eljoker@example.com" }
+    { name = "ElJoker63", email = "eljoker63@gmail.com" }
 ]
 classifiers = [
     "Programming Language :: Python :: 3",
@@ -33,3 +33,4 @@ version = {attr = "apklis.__version__"}
 
 [project.urls]
 Homepage = "https://github.com/ElJoker63/apklis-downloader"
+Docs = "https://eljoker63.github.io/apklis-downloader"
