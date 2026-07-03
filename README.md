@@ -81,4 +81,4 @@ Toda la información detallada sobre **autenticación, callbacks de progreso per
 - **Contribuir:** [CONTRIBUTING.md](CONTRIBUTING.md)
 
 ---
-<p align="center">Desarrollado con ❤️ por ElJoker63. </>+☕️=z17</p>
+<p align="center">Desarrollado con ❤️ por ElJoker63. &lt;/&gt;+☕️=❤️</p>
