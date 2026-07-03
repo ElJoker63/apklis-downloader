@@ -37,7 +37,7 @@ theme:
 extra_css:
   - stylesheets/extra.css
 
-copyright: 'Desarrollado con ❤️ por ElJoker63. </>+☕️=z17'
+copyright: 'Desarrollado con ❤️ por ElJoker63. <code></>+☕️=z17</code>'
 
 extra:
   social:
