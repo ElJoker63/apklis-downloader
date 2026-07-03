@@ -1,0 +1,35 @@
+[build-system]
+requires = ["setuptools>=61.0.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "apklis-downloader"
+dynamic = ["version"]
+description = "A Python library to retrieve metadata and download APKs from Apklis, with progress monitoring support."
+readme = "README.md"
+authors = [
+    { name = "El Joker", email = "eljoker@example.com" }
+]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Intended Audience :: Developers",
+    "Topic :: Software Development :: Libraries :: Python Modules"
+]
+dependencies = [
+    "httpx>=0.20.0"
+]
+requires-python = ">=3.7"
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.0.0",
+    "pytest-asyncio>=0.18.0"
+]
+
+[tool.setuptools.dynamic]
+version = {attr = "apklis.__version__"}
+
+[project.urls]
+Homepage = "https://github.com/ElJoker63/apklis-downloader"
