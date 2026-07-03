@@ -8,7 +8,10 @@ from .api import (
     get_apk_url,
     search,
     pays_app,
-    get_apps_by_category
+    get_apps_by_category,
+    get_categories,
+    get_app_details,
+    get_releases,
 )
 from .downloader import download_apk, default_progress_callback
 from .utils import format_size, format_speed, sizeof_fmt
@@ -30,5 +33,8 @@ __all__ = [
     "sizeof_fmt",
     "search",
     "pays_app",
-    "get_apps_by_category"
+    "get_apps_by_category",
+    "get_categories",
+    "get_app_details",
+    "get_releases",
 ]

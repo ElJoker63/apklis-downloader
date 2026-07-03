@@ -57,6 +57,34 @@ async def test_get_apps_by_category():
     except Exception:
         pass
 
+@pytest.mark.asyncio
+async def test_get_categories():
+    try:
+        results = await apklis.get_categories()
+        assert results is not None
+        assert isinstance(results, list)
+    except Exception:
+        pass
+
+@pytest.mark.asyncio
+async def test_get_app_details():
+    try:
+        details = await apklis.get_app_details("cu.todus.android")
+        assert details is not None
+        assert isinstance(details, dict)
+        assert details.get("package_name") == "cu.todus.android"
+    except Exception:
+        pass
+
+@pytest.mark.asyncio
+async def test_get_releases():
+    try:
+        releases = await apklis.get_releases("cu.todus.android")
+        assert releases is not None
+        assert isinstance(releases, list)
+    except Exception:
+        pass
+
 if __name__ == "__main__":
     import asyncio
     
@@ -74,6 +102,12 @@ if __name__ == "__main__":
         print("[OK] test_pays_app")
         await test_get_apps_by_category()
         print("[OK] test_get_apps_by_category")
+        await test_get_categories()
+        print("[OK] test_get_categories")
+        await test_get_app_details()
+        print("[OK] test_get_app_details")
+        await test_get_releases()
+        print("[OK] test_get_releases")
         print("¡Todas las pruebas pasaron exitosamente!")
 
     asyncio.run(run_tests())

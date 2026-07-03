@@ -4,19 +4,93 @@ El módulo `apklis.api` proporciona las funciones asíncronas para interactuar c
 
 ---
 
-## `get_info`
+## `get_categories`
 
 ```python
-async def get_info(package: str) -> tuple
+async def get_categories() -> list
 ```
 
-Obtiene metadatos informativos básicos de una aplicación específica por su identificador de paquete (package name).
+Obtiene el listado completo de categorías disponibles para aplicaciones y juegos en Apklis.
+
+**Retorna:**
+- `list`: Lista de diccionarios con la información de las categorías (ej. `[{'name': 'Utilidades', 'icon': 'utils', ...}]`).
+
+---
+
+## `get_apps`
+
+```python
+async def get_apps(limit=30, offset=0, ordering=None, category=None, free=None, paid=None) -> list
+```
+
+**Función de consulta flexible.** Obtiene un listado de aplicaciones aplicando paginación, ordenamiento y filtros por precio o categorías.
+
+**Parámetros:**
+- `limit` *(int, opcional)*: Cantidad máxima de aplicaciones a retornar (por defecto `30`).
+- `offset` *(int, opcional)*: Desplazamiento de paginación (por defecto `0`).
+- `ordering` *(str, opcional)*: Campo por el cual ordenar los resultados. Ejemplos comunes:
+  - `-download_count` (Más descargadas)
+  - `-sale_count` (Más vendidas)
+  - `-rating` (Mejor valoradas)
+  - `-updated` (Actualizaciones recientes)
+- `category` *(str, opcional)*: Filtrar por código de categoría (ej. `"utils"`, `"games"`).
+- `free` *(bool, opcional)*: Si es `True`, filtra únicamente aplicaciones gratuitas.
+- `paid` *(bool, opcional)*: Si es `True`, filtra únicamente aplicaciones de pago.
+
+**Retorna:**
+- `list`: Lista de diccionarios con la metadata de las aplicaciones que cumplen con los criterios.
+
+---
+
+## `search`
+
+```python
+async def search(text: str, limit=30, offset=0) -> list
+```
+
+Busca aplicaciones que coincidan con la cadena de texto de búsqueda proporcionada.
+
+**Parámetros:**
+- `text` *(str)*: El término de búsqueda (ej. `"todus"`).
+- `limit` *(int, opcional)*: Límite de resultados (por defecto `30`).
+- `offset` *(int, opcional)*: Desplazamiento de paginación (por defecto `0`).
+
+**Retorna:**
+- `list`: Una lista de diccionarios con la metadata de las aplicaciones coincidentes.
+
+---
+
+## `get_app_details`
+
+```python
+async def get_app_details(package: str) -> dict
+```
+
+Obtiene el **diccionario completo de metadatos** de una aplicación sin filtros, tal como lo sirve el servidor oficial de Apklis. Útil para capturar toda la información disponible (desarrollador, screenshots de releases, tamaño, puntuación, etc.).
 
 **Parámetros:**
 - `package` *(str)*: Nombre del paquete de la aplicación (ej. `"cu.todus.android"`).
 
 **Retorna:**
-- `tuple`: Una tupla conteniendo `(icon_url, name, description, updated_date)`.
+- `dict`: Diccionario completo con toda la información de la aplicación.
+
+---
+
+## `get_releases`
+
+```python
+async def get_releases(package: str, limit=10, offset=0) -> list
+```
+
+Obtiene el historial de lanzamientos (releases) de una aplicación específica. Incluye detalles de changelogs, capturas de pantalla, permisos requeridos, tamaño del archivo y arquitecturas soportadas.
+
+**Parámetros:**
+- `package` *(str)*: Nombre del paquete de la aplicación.
+- `limit` *(int, opcional)*: Cantidad de lanzamientos a retornar (por defecto `10`).
+- `offset` *(int, opcional)*: Desplazamiento de paginación.
+
+**Retorna:**
+- `list`: Lista de diccionarios, donde cada uno describe un lanzamiento con sus capturas, permisos y changelog.
 
 ---
 
@@ -26,29 +100,13 @@ Obtiene metadatos informativos básicos de una aplicación específica por su id
 async def get_release(package: str) -> dict
 ```
 
-Obtiene la información detallada del último lanzamiento (release) disponible para una aplicación.
+Obtiene los detalles del **último lanzamiento** (lanzamiento más reciente) disponible para una aplicación.
 
 **Parámetros:**
 - `package` *(str)*: Nombre del paquete de la aplicación.
 
 **Retorna:**
-- `dict`: Diccionario con las propiedades del release (ej. `sha256`, `version_name`, `version_code`, `public`, etc.).
-
----
-
-## `get_download_url`
-
-```python
-async def get_download_url(release_sha256: str) -> dict
-```
-
-Envía una solicitud POST a Apklis para obtener el enlace de descarga del release correspondiente al SHA256 proporcionado.
-
-**Parámetros:**
-- `release_sha256` *(str)*: El hash SHA256 del lanzamiento de la aplicación.
-
-**Retorna:**
-- `dict`: Diccionario con la URL de descarga o detalles del error (como `{"detail": "Forbidden"}` para apps de pago).
+- `dict`: Diccionario con las propiedades detalladas del último lanzamiento.
 
 ---
 
@@ -58,59 +116,32 @@ Envía una solicitud POST a Apklis para obtener el enlace de descarga del releas
 async def get_apk_url(package_name: str) -> str
 ```
 
-**Función de alto nivel.** Obtiene automáticamente la URL de descarga lista para descargar para cualquier aplicación. Si la descarga directa devuelve un error `Forbidden` (debido a restricciones de compra/pago de la app), resuelve automáticamente el bypass a través de un token público (`gid`).
+**Función de alto nivel para descargas.** Resuelve el enlace de descarga física del APK para cualquier paquete. Maneja de forma transparente las restricciones de aplicaciones de pago (`Forbidden`) inyectando un token público temporal (`gid`).
 
 **Parámetros:**
 - `package_name` *(str)*: Nombre del paquete de la aplicación.
 
 **Retorna:**
-- `str`: Enlace de descarga directo o alternativo completamente funcional.
+- `str`: Enlace de descarga directo completamente funcional.
 
 ---
 
-## `search`
+## Funciones heredadas (Compatibilidad)
 
+### `get_info`
 ```python
-async def search(text: str) -> list
+async def get_info(package: str) -> tuple
 ```
+Retorna la tupla simplificada de compatibilidad: `(icon_url, name, description, updated_date)`.
 
-Busca aplicaciones en la plataforma Apklis que coincidan con el texto de búsqueda proporcionado.
-
-**Parámetros:**
-- `text` *(str)*: El término de búsqueda (ej. `"minecraft"`).
-
-**Retorna:**
-- `list`: Una lista de diccionarios, donde cada diccionario contiene información del paquete de la aplicación coincidente.
-
----
-
-## `pays_app`
-
+### `pays_app`
 ```python
 async def pays_app(offset: str = "0") -> list
 ```
+Retorna las aplicaciones de pago (equivalente a `get_apps(paid=True)`).
 
-Obtiene el listado de aplicaciones de pago (con precio mayor a cero) disponibles en la plataforma.
-
-**Parámetros:**
-- `offset` *(str, opcional)*: El desplazamiento para la paginación (por defecto `"0"`).
-
-**Retorna:**
-- `list`: Una lista de diccionarios con la información de las aplicaciones de pago encontradas.
-
----
-
-## `get_apps_by_category`
-
+### `get_apps_by_category`
 ```python
 async def get_apps_by_category(category: str, offset: str = "0") -> list
 ```
-
-Recupera las aplicaciones asociadas a una categoría específica.
-
-**Parámetros:**
-- `category` *(str)*: El identificador o nombre de la categoría (ej. `"utils"`).
-- `offset` *(str, opcional)*: El desplazamiento para la paginación.
-
-**Retorna:**
-- `list`: Una lista de diccionarios de las aplicaciones pertenecientes a la categoría.
+Retorna aplicaciones de una categoría (equivalente a `get_apps(category=category)`).

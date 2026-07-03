@@ -9,7 +9,7 @@
   <a href="https://github.com/ElJoker63/apklis-downloader/blob/main/LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue" alt="License"></a>
 </p>
 
-<p align="center"><strong>Cliente Python Asíncrono para Apklis.cu</strong> — descarga APKs de forma rápida y sencilla con monitoreo de progreso.</p>
+<p align="center"><strong>Cliente Python Asíncrono para Apklis.cu</strong> — descarga APKs y consulta la información completa de la plataforma.</p>
 
 <p align="center">
   <a href="https://eljoker63.github.io/apklis-downloader"><b>📖 LEER LA DOCUMENTACIÓN COMPLETA AQUÍ 📖</b></a>
@@ -19,7 +19,7 @@
 
 ## ⚡ ¿Qué es apklis-downloader?
 
-Es una librería moderna, asíncrona y de alto rendimiento para interactuar con la plataforma cubana **Apklis.cu**. Te permite consultar información detallada de aplicaciones, obtener datos del último lanzamiento y descargar archivos APK con una barra de progreso integrada altamente personalizable.
+Es una librería moderna, asíncrona y de alto rendimiento para interactuar con la plataforma cubana **Apklis.cu**. Te permite realizar búsquedas de aplicaciones, filtrar por categorías, paginar resultados, obtener el historial completo de lanzamientos (incluyendo changelogs y capturas de pantalla) y descargar archivos APK con una barra de progreso altamente personalizable.
 
 Además, cuenta con resolución automática de enlaces de descarga protegidos (Forbidden) usando una cuenta pública (`gid`).
 
@@ -35,7 +35,7 @@ pip install apklis-downloader
 
 ## 🚀 Uso Rápido
 
-El siguiente ejemplo muestra cómo descargar un APK de forma asíncrona:
+El siguiente ejemplo muestra cómo realizar consultas avanzadas y descargar un APK de forma asíncrona:
 
 ```python
 import asyncio
@@ -49,15 +49,19 @@ if hasattr(sys.stdout, 'reconfigure'):
 async def main():
     package = "cu.todus.android"
     
-    # 1. Obtener información de la app
-    icon, name, description, updated = await apklis.get_info(package)
-    print(f"Nombre: {name}")
+    # 1. Obtener el diccionario completo de detalles de la app
+    app_details = await apklis.get_app_details(package)
+    print(f"Nombre: {app_details.get('name')}")
+    print(f"Descargas totales: {app_details.get('download_count')}")
     
-    # 2. Resolver la URL de descarga automáticamente (incluye bypass si es Forbidden)
+    # 2. Obtener historial de lanzamientos
+    releases = await apklis.get_releases(package, limit=2)
+    print(f"Última versión disponible: {releases[0].get('version_name')}")
+    
+    # 3. Resolver la URL de descarga automáticamente (incluye bypass si es Forbidden)
     download_url = await apklis.get_apk_url(package)
-    print(f"URL de descarga: {download_url}")
     
-    # 3. Descargar mostrando la barra de progreso
+    # 4. Descargar mostrando la barra de progreso
     await apklis.download_apk(download_url)
 
 if __name__ == "__main__":
@@ -77,4 +81,4 @@ Toda la información detallada sobre **autenticación, callbacks de progreso per
 - **Contribuir:** [CONTRIBUTING.md](CONTRIBUTING.md)
 
 ---
-<p align="center">Desarrollado con ❤️ por ElJoker63.</p>
+<p align="center">Desarrollado con ❤️ por ElJoker63. </>+☕️=z17</p>
