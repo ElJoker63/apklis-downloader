@@ -17,7 +17,7 @@ from .api import (
 from .downloader import download_apk, default_progress_callback
 from .utils import format_size, format_speed, sizeof_fmt
 
-__version__ = "0.0.2"
+__version__ = "0.0.3"
 
 __all__ = [
     "get_apps",
